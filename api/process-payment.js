@@ -17,10 +17,18 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const { sourceId } = req.body || {};
+  const { sourceId, buyerName, buyerEmail } = req.body || {};
 
   if (!sourceId) {
     res.status(400).json({ success: false, error: 'Missing payment source.' });
+    return;
+  }
+
+  const name = typeof buyerName === 'string' ? buyerName.trim().slice(0, 100) : '';
+  const email = typeof buyerEmail === 'string' ? buyerEmail.trim().slice(0, 254) : '';
+
+  if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    res.status(400).json({ success: false, error: 'Please provide your name and a valid email address.' });
     return;
   }
 
@@ -38,7 +46,8 @@ module.exports = async function handler(req, res) {
         currency: 'USD',
       },
       locationId: process.env.SQUARE_LOCATION_ID,
-      note: 'The Unraveling — General Admission',
+      buyerEmailAddress: email,
+      note: `The Unraveling — General Admission — ${name}`.slice(0, 500),
     });
 
     const payment = response.payment;

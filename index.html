@@ -484,6 +484,28 @@
   }
 
   /* SQUARE CARD FORM */
+  .buyer-field {
+    display: block;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.8rem;
+    background: var(--white-dove);
+    border: 1px solid rgba(200,184,154,0.6);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--charcoal);
+    letter-spacing: 0.03em;
+  }
+  .buyer-field::placeholder {
+    color: var(--stone);
+    opacity: 0.8;
+  }
+  .buyer-field:focus {
+    outline: none;
+    border-color: var(--sage);
+  }
+
   #card-container {
     margin-bottom: 1.2rem;
   }
@@ -728,6 +750,8 @@
       </ul>
 
       <form id="payment-form">
+        <input type="text" id="buyer-name" class="buyer-field" placeholder="Full name" autocomplete="name" required>
+        <input type="email" id="buyer-email" class="buyer-field" placeholder="Email address" autocomplete="email" required>
         <div id="card-container"></div>
         <button id="card-button" type="submit" class="ticket-cta">Reserve Your Place — $100</button>
         <div id="payment-status" class="payment-status"></div>
@@ -816,6 +840,14 @@
 
     form.addEventListener('submit', async function (event) {
       event.preventDefault();
+
+      const buyerName = document.getElementById('buyer-name').value.trim();
+      const buyerEmail = document.getElementById('buyer-email').value.trim();
+      if (!buyerName || !buyerEmail) {
+        setStatus('Please enter your name and email so we can send your confirmation.', 'error');
+        return;
+      }
+
       cardButton.disabled = true;
       setStatus('Processing your reservation...', 'pending');
 
@@ -825,7 +857,7 @@
         const response = await fetch('/api/process-payment', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sourceId: token }),
+          body: JSON.stringify({ sourceId: token, buyerName, buyerEmail }),
         });
 
         const result = await response.json();
