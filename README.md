@@ -1,5 +1,32 @@
 # The Unraveling — Setup
 
+## Swapping in real photos
+
+The design has three photo slots, currently showing placeholder color blocks with captions:
+1. Hero — wildflowers (`.hero-photo-1`)
+2. Hero — the long table (`.hero-photo-2`)
+3. About — doves in flight (`.about-photo`)
+
+To use a real photo: put the image file in an `images/` folder next to `index.html`, then replace the
+slot's inner markup. For example, change:
+
+```html
+<div class="photo-slot-inner">
+  <figcaption class="photo-caption">photograph · wildflowers</figcaption>
+</div>
+```
+
+to:
+
+```html
+<div class="photo-slot-inner" style="padding:0;">
+  <img src="images/wildflowers.jpg" alt="Wildflowers in golden light">
+</div>
+```
+
+Images are cropped to fill the frame automatically (`object-fit: cover`). Use photos at least
+1200px wide. Warm, natural light matches the palette best.
+
 Static site with an embedded Square card form (`index.html`) backed by a serverless
 function (`api/process-payment.js`) that charges the card via Square's Payments API.
 Built for deployment on Vercel.
