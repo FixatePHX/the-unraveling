@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Unraveling — Women's Conference 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<script type="text/javascript" src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --linen: #EDE5D4;
+    --sage: #8A9B7F;
+    --sage-dark: #5C6E52;
+    --stone: #9B9082;
+    --earth: #7A6651;
+    --bark: #4A3728;
+    --dust: #C8B89A;
+    --charcoal: #2C2820;
+    --white-dove: #FAF8F4;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background-color: var(--cream);
+    color: var(--charcoal);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    background: transparent;
+    mix-blend-mode: normal;
+    transition: background 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(245, 240, 232, 0.92);
+    backdrop-filter: blur(8px);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+    color: var(--white-dove);
+    text-decoration: none;
+    font-style: italic;
+  }
+  nav.scrolled .nav-logo { color: var(--bark); }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(250,248,244,0.85);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  nav.scrolled .nav-links a { color: var(--stone); }
+  .nav-links a:hover { color: var(--white-dove); }
+  nav.scrolled .nav-links a:hover { color: var(--bark); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 3rem 5rem;
+    background: linear-gradient(160deg, #3d3428 0%, #5c4e3a 35%, #7a6651 60%, #8a9b7f 100%);
+    overflow: hidden;
+  }
+
+  .hero-texture {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse at 70% 20%, rgba(196,176,140,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(90,110,82,0.2) 0%, transparent 50%);
+  }
+
+  /* floating dove shapes */
+  .dove {
+    position: absolute;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+  .dove svg { fill: #FAF8F4; }
+
+  .hero-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dust);
+    margin-bottom: 1.2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4.5rem, 10vw, 9rem);
+    font-weight: 300;
+    line-height: 0.92;
+    color: var(--white-dove);
+    position: relative;
+    z-index: 2;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--dust);
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-meta-item {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(250,248,244,0.65);
+  }
+
+  .hero-meta-divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(250,248,244,0.25);
+  }
+
+  .hero-cta {
+    margin-top: 2.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: var(--dust);
+    color: var(--bark);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.25s, color 0.25s;
+  }
+  .btn-primary:hover {
+    background: var(--white-dove);
+    color: var(--bark);
+  }
+
+  .btn-outline {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    border: 1px solid var(--dust);
+    color: var(--dust);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin-left: 1rem;
+    transition: background 0.25s, color 0.25s;
+  }
+  .btn-outline:hover {
+    background: rgba(200,184,154,0.15);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    right: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 2;
+  }
+  .scroll-hint span {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(250,248,244,0.4);
+    writing-mode: vertical-rl;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, rgba(250,248,244,0.4), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 0.9; transform: scaleY(1.1); }
+  }
+
+  /* SECTIONS COMMON */
+  section { padding: 7rem 3rem; }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--sage-dark);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--bark);
+  }
+
+  .section-title em { font-style: italic; color: var(--earth); }
+
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--dust);
+    margin: 2rem 0;
+  }
+
+  /* ABOUT */
+  .about {
+    background: var(--white-dove);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .about-text p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--stone);
+    margin-bottom: 1.4rem;
+  }
+
+  .about-visual {
+    position: relative;
+    height: 500px;
+  }
+
+  .about-card {
+    position: absolute;
+    background: var(--linen);
+    border: 1px solid var(--dust);
+  }
+
+  .about-card-main {
+    width: 75%;
+    height: 85%;
+    top: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .about-card-accent {
+    width: 55%;
+    height: 55%;
+    bottom: 0; left: 0;
+    background: var(--sage);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .about-accent-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--white-dove);
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .about-dove-pattern {
+    font-size: 5rem;
+    opacity: 0.15;
+    color: var(--bark);
+  }
+
+  /* SCHEDULE */
+  .schedule {
+    background: var(--linen);
+    max-width: 100%;
+  }
+
+  .schedule-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+
+  .schedule-note {
+    font-size: 0.78rem;
+    color: var(--stone);
+    letter-spacing: 0.05em;
+    font-style: italic;
+  }
+
+  .schedule-grid {
+    display: grid;
+    gap: 0;
+  }
+
+  .schedule-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-top: 1px solid var(--dust);
+    transition: background 0.2s;
+  }
+  .schedule-item:last-child { border-bottom: 1px solid var(--dust); }
+
+  .schedule-time {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--stone);
+    padding-top: 0.2rem;
+  }
+
+  .schedule-content-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 300;
+    color: var(--bark);
+    margin-bottom: 0.4rem;
+  }
+
+  .schedule-content-desc {
+    font-size: 0.85rem;
+    color: var(--stone);
+    line-height: 1.7;
+  }
+
+  .schedule-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sage-dark);
+    background: rgba(138,155,127,0.15);
+    padding: 0.25rem 0.7rem;
+    margin-top: 0.6rem;
+  }
+
+  /* TICKETS */
+  .tickets {
+    background: var(--bark);
+    color: var(--white-dove);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tickets-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse at 30% 50%, rgba(138,155,127,0.12) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 20%, rgba(200,184,154,0.1) 0%, transparent 45%);
+  }
+
+  .tickets .section-label { color: var(--dust); }
+  .tickets .section-title { color: var(--white-dove); }
+  .tickets .section-title em { color: var(--dust); }
+  .tickets .divider { background: rgba(200,184,154,0.4); margin: 2rem auto; }
+
+  .ticket-card-wrap {
+    position: relative;
+    z-index: 2;
+    max-width: 420px;
+    margin: 3rem auto 0;
+  }
+
+  .ticket-card {
+    background: var(--linen);
+    border: 1px solid var(--dust);
+    padding: 3rem 2.5rem;
+    position: relative;
+  }
+
+  .ticket-card::before, .ticket-card::after {
+    content: '';
+    position: absolute;
+    left: -12px;
+    width: 24px;
+    height: 24px;
+    background: var(--bark);
+    border-radius: 50%;
+  }
+  .ticket-card::before { top: 50%; transform: translateY(-50%); }
+  .ticket-card::after { left: auto; right: -12px; top: 50%; transform: translateY(-50%); }
+
+  .ticket-type {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--sage-dark);
+    margin-bottom: 0.8rem;
+  }
+
+  .ticket-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    color: var(--bark);
+    line-height: 1;
+  }
+
+  .ticket-price sup {
+    font-size: 1.5rem;
+    vertical-align: super;
+  }
+
+  .ticket-desc {
+    font-size: 0.82rem;
+    color: var(--stone);
+    margin: 1rem 0 1.8rem;
+    line-height: 1.7;
+  }
+
+  .ticket-perks {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+
+  .ticket-perks li {
+    font-size: 0.82rem;
+    color: var(--earth);
+    padding: 0.4rem 0;
+    border-top: 1px solid rgba(200,184,154,0.4);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .ticket-perks li:last-child { border-bottom: 1px solid rgba(200,184,154,0.4); }
+
+  .perk-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--sage);
+    flex-shrink: 0;
+  }
+
+  /* SQUARE CARD FORM */
+  #card-container {
+    margin-bottom: 1.2rem;
+  }
+  #card-container .sq-card-iframe-container {
+    border: none;
+  }
+
+  .ticket-cta {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background: var(--bark);
+    color: var(--dust);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.25s;
+    border: none;
+    cursor: pointer;
+  }
+  .ticket-cta:hover { background: var(--charcoal); }
+  .ticket-cta:disabled { opacity: 0.6; cursor: wait; }
+
+  .payment-status {
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+    display: none;
+  }
+  .payment-status.error { color: #a94442; display: block; }
+  .payment-status.success { color: var(--sage-dark); display: block; }
+  .payment-status.pending { color: var(--stone); display: block; }
+
+  .tickets-note {
+    position: relative;
+    z-index: 2;
+    margin-top: 2rem;
+    font-size: 0.75rem;
+    color: rgba(200,184,154,0.5);
+    letter-spacing: 0.08em;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--charcoal);
+    color: rgba(200,184,154,0.5);
+    padding: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--dust);
+  }
+
+  .footer-note {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+  }
+
+  /* FADE IN */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 1.5rem 4rem; }
+    section { padding: 5rem 1.5rem; }
+    .about { grid-template-columns: 1fr; gap: 3rem; }
+    .about-visual { height: 320px; }
+    .schedule-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">The Unraveling</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#tickets">Tickets</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-texture"></div>
+
+  <!-- floating shapes suggesting doves -->
+  <div class="dove" style="top:12%; right:8%; transform: rotate(-20deg);">
+    <svg width="80" height="60" viewBox="0 0 80 60"><path d="M0 30 Q20 0 40 15 Q60 30 80 10 Q65 35 40 30 Q20 45 0 30Z"/></svg>
+  </div>
+  <div class="dove" style="top:35%; right:22%; transform: rotate(10deg); opacity:0.07;">
+    <svg width="50" height="38" viewBox="0 0 80 60"><path d="M0 30 Q20 0 40 15 Q60 30 80 10 Q65 35 40 30 Q20 45 0 30Z"/></svg>
+  </div>
+  <div class="dove" style="top:60%; right:5%; transform: rotate(-5deg); opacity:0.08;">
+    <svg width="35" height="26" viewBox="0 0 80 60"><path d="M0 30 Q20 0 40 15 Q60 30 80 10 Q65 35 40 30 Q20 45 0 30Z"/></svg>
+  </div>
+
+  <div class="hero-eyebrow">Fixate Church · Downtown Phoenix · February 2027</div>
+  <h1 class="hero-title">The<br><em>Unraveling</em></h1>
+  <div class="hero-meta">
+    <span class="hero-meta-item">February 2027</span>
+    <div class="hero-meta-divider"></div>
+    <span class="hero-meta-item">Downtown Phoenix, AZ</span>
+    <div class="hero-meta-divider"></div>
+    <span class="hero-meta-item">A women's weekend</span>
+  </div>
+  <div class="hero-cta">
+    <a href="#tickets" class="btn-primary">Reserve Your Place</a>
+    <a href="#about" class="btn-outline">Learn More</a>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-text fade-in">
+    <p class="section-label">The heart behind the weekend</p>
+    <h2 class="section-title">The undoing of what<br>has become <em>tangled.</em></h2>
+    <div class="divider"></div>
+    <p>The Unraveling is not a women's conference about women. It is a gathering around the Lord — Father, Son, and Spirit — from which everything else flows.</p>
+    <p>We believe that wholeness and healing for the feminine soul come through deeper communion with God. That abiding produces overflowing. That those who look upon the Lord are radiant.</p>
+    <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.05rem; color:var(--earth); line-height:1.8;">"Those who look to him are radiant, and their faces shall never be ashamed." — Psalm 34:5</p>
+    <a href="#tickets" class="btn-primary" style="margin-top:1.5rem;">Reserve Your Place</a>
+  </div>
+  <div class="about-visual fade-in">
+    <div class="about-card about-card-main">
+      <div class="about-dove-pattern">✦</div>
+    </div>
+    <div class="about-card about-card-accent">
+      <p class="about-accent-text">"The discovery of what has been hidden."</p>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="schedule" id="schedule">
+  <div class="schedule-header fade-in">
+    <div>
+      <p class="section-label">Day of</p>
+      <h2 class="section-title">The <em>Schedule</em></h2>
+    </div>
+    <p class="schedule-note">Times to be confirmed</p>
+  </div>
+
+  <div class="schedule-grid">
+    <div class="schedule-item fade-in">
+      <div class="schedule-time">Morning</div>
+      <div>
+        <p class="schedule-content-title">Gather & Abide</p>
+        <p class="schedule-content-desc">Arrive and settle in. Coffee, connection, and a moment to breathe before the day unfolds.</p>
+        <span class="schedule-tag">Arrival</span>
+      </div>
+    </div>
+    <div class="schedule-item fade-in">
+      <div class="schedule-time">Opening</div>
+      <div>
+        <p class="schedule-content-title">Welcome & Worship</p>
+        <p class="schedule-content-desc">We begin where everything begins — in the presence of God. Worship, prayer, and a word to open the weekend.</p>
+        <span class="schedule-tag">All Together</span>
+      </div>
+    </div>
+    <div class="schedule-item fade-in">
+      <div class="schedule-time">Mid-Morning</div>
+      <div>
+        <p class="schedule-content-title">Main Session</p>
+        <p class="schedule-content-desc">A teaching rooted in the Word. Speaker to be announced.</p>
+        <span class="schedule-tag">Main Stage</span>
+      </div>
+    </div>
+    <div class="schedule-item fade-in">
+      <div class="schedule-time">Midday</div>
+      <div>
+        <p class="schedule-content-title">Table Fellowship</p>
+        <p class="schedule-content-desc">Eat together. Rest. Let the morning settle. There is something holy about sharing a meal.</p>
+        <span class="schedule-tag">Community</span>
+      </div>
+    </div>
+    <div class="schedule-item fade-in">
+      <div class="schedule-time">Afternoon</div>
+      <div>
+        <p class="schedule-content-title">Breakout Sessions</p>
+        <p class="schedule-content-desc">Smaller spaces for deeper conversation. Topics and hosts to be announced.</p>
+        <span class="schedule-tag">Breakouts</span>
+      </div>
+    </div>
+    <div class="schedule-item fade-in">
+      <div class="schedule-time">Closing</div>
+      <div>
+        <p class="schedule-content-title">Sent Out</p>
+        <p class="schedule-content-desc">Come back together to close the day in worship and prayer — and go out different than you came in.</p>
+        <span class="schedule-tag">All Together</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKETS -->
+<section class="tickets" id="tickets">
+  <div class="tickets-bg"></div>
+  <div class="fade-in" style="position:relative;z-index:2;">
+    <p class="section-label">Come</p>
+    <h2 class="section-title">A place at<br><em>the table</em></h2>
+    <div class="divider"></div>
+    <p style="color:rgba(200,184,154,0.7); font-size:0.9rem; max-width:420px; margin:0 auto; line-height:1.9;">A new day is dawning. Come with open hands — ready to be undone, and made whole.</p>
+  </div>
+
+  <div class="ticket-card-wrap fade-in">
+    <div class="ticket-card">
+      <p class="ticket-type">General Admission</p>
+      <div class="ticket-price"><sup>$</sup>100</div>
+      <p class="ticket-desc">Full weekend access to The Unraveling — Downtown Phoenix, February 2027.</p>
+      <ul class="ticket-perks">
+        <li><span class="perk-dot"></span>All main sessions & worship</li>
+        <li><span class="perk-dot"></span>Table fellowship lunch</li>
+        <li><span class="perk-dot"></span>All breakout sessions</li>
+        <li><span class="perk-dot"></span>Conference materials</li>
+      </ul>
+
+      <form id="payment-form">
+        <div id="card-container"></div>
+        <button id="card-button" type="submit" class="ticket-cta">Reserve Your Place — $100</button>
+        <div id="payment-status" class="payment-status"></div>
+      </form>
+    </div>
+  </div>
+  <p class="tickets-note">Exact date to be announced · Downtown Phoenix, AZ</p>
+</section>
+
+<footer>
+  <div class="footer-logo">The Unraveling</div>
+  <div class="footer-note">© 2027 · Women's Conference · Downtown Phoenix</div>
+  <div class="footer-note">questions? <a href="mailto:hello@fixatephx.com" style="color:var(--dust);">hello@fixatephx.com</a></div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+<!-- SQUARE WEB PAYMENTS SDK -->
+<script>
+  const SQUARE_APPLICATION_ID = 'sandbox-sq0idb-ooIvvdCAHt9iYo2Fjdz5eA';
+  const SQUARE_LOCATION_ID = 'L3AAD7W6Y32XV';
+
+  async function initializeCard(payments) {
+    const card = await payments.card();
+    await card.attach('#card-container');
+    return card;
+  }
+
+  function setStatus(message, type) {
+    const el = document.getElementById('payment-status');
+    el.textContent = message;
+    el.className = 'payment-status' + (type ? ' ' + type : '');
+  }
+
+  async function tokenize(paymentMethod) {
+    const tokenResult = await paymentMethod.tokenize();
+    if (tokenResult.status === 'OK') {
+      return tokenResult.token;
+    }
+    let errorMessage = `Tokenization failed with status: ${tokenResult.status}`;
+    if (tokenResult.errors) {
+      errorMessage += ` and errors: ${JSON.stringify(tokenResult.errors)}`;
+    }
+    throw new Error(errorMessage);
+  }
+
+  document.addEventListener('DOMContentLoaded', async function () {
+    if (!window.Square) {
+      setStatus('Payments are unavailable right now. Please email hello@fixatephx.com to reserve your place.', 'error');
+      return;
+    }
+
+    let payments;
+    try {
+      payments = window.Square.payments(SQUARE_APPLICATION_ID, SQUARE_LOCATION_ID);
+    } catch (e) {
+      setStatus('Payments failed to load. Please refresh the page.', 'error');
+      return;
+    }
+
+    let card;
+    try {
+      card = await initializeCard(payments);
+    } catch (e) {
+      setStatus('Unable to load the card form. Please refresh the page.', 'error');
+      return;
+    }
+
+    const form = document.getElementById('payment-form');
+    const cardButton = document.getElementById('card-button');
+
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      cardButton.disabled = true;
+      setStatus('Processing your reservation...', 'pending');
+
+      try {
+        const token = await tokenize(card);
+
+        const response = await fetch('/api/process-payment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sourceId: token }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          setStatus('You have a place at the table. A confirmation email is on its way.', 'success');
+          form.reset();
+          cardButton.textContent = 'Reserved';
+        } else {
+          setStatus(result.error || 'Payment could not be completed. Please try again.', 'error');
+          cardButton.disabled = false;
+        }
+      } catch (e) {
+        setStatus(e.message || 'Something went wrong. Please try again.', 'error');
+        cardButton.disabled = false;
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
