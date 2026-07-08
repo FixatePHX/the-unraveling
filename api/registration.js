@@ -106,13 +106,13 @@ async function appendToSheet(reg) {
   const values = [[
     reg.name,
     reg.email,
-    reg.paymentId,
-    '$100',
     reg.dietary || '',
     reg.emergencyName || '',
     reg.emergencyPhone || '',
     reg.heardAbout || '',
     (reg.workshops || []).join(', '),
+    reg.paymentId,
+    '$100',
     new Date().toISOString(),
   ]];
 
