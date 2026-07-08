@@ -1,5 +1,5 @@
-const FROM = process.env.RESEND_FROM || 'The Unraveling <admin@fixatephx.com>';
-const REPLY_TO = 'admin@fixatephx.com';
+const FROM = process.env.RESEND_FROM || 'The Unraveling <women@fixatephx.com>';
+const REPLY_TO = 'women@fixatephx.com';
 
 function escapeHtml(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -44,7 +44,7 @@ function buildHtml(name) {
         </td></tr>
         <tr><td style="padding:24px 40px;background-color:#4A3728;text-align:center;">
           <p style="margin:0 0 4px;font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:16px;color:#C8B89A;">The Unraveling</p>
-          <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:12px;line-height:1.8;color:#C8B89A;">questions? <a href="mailto:admin@fixatephx.com" style="color:#EDE5D4;">admin@fixatephx.com</a> &middot; instagram <a href="https://www.instagram.com/fixate.women" style="color:#EDE5D4;">@fixate.women</a></p>
+          <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:12px;line-height:1.8;color:#C8B89A;">questions? <a href="mailto:women@fixatephx.com" style="color:#EDE5D4;">women@fixatephx.com</a> &middot; instagram <a href="https://www.instagram.com/fixate.women" style="color:#EDE5D4;">@fixate.women</a></p>
         </td></tr>
       </table>
     </td></tr>
@@ -72,7 +72,7 @@ function buildText(name) {
     '',
     '"Those who look to him are radiant, and their faces shall never be ashamed." — Psalm 34:5',
     '',
-    'questions? admin@fixatephx.com · instagram @fixate.women',
+    'questions? women@fixatephx.com · instagram @fixate.women',
   ].join('\n');
 }
 
