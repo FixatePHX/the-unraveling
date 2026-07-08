@@ -77,6 +77,28 @@
   }
   .nav-links a:hover { color: var(--bark); }
 
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    cursor: pointer;
+    position: relative;
+    z-index: 120;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--bark);
+    margin: 5px auto;
+    transition: transform 0.3s;
+  }
+  nav.menu-open .nav-toggle span:first-child { transform: translateY(3.25px) rotate(45deg); }
+  nav.menu-open .nav-toggle span:last-child { transform: translateY(-3.25px) rotate(-45deg); }
+
   /* LINE ART */
   .lineart { position: absolute; pointer-events: none; }
   .lineart path, .lineart ellipse { fill: none; stroke: var(--sage); stroke-width: 1.1; stroke-linecap: round; }
@@ -576,16 +598,56 @@
   }
 
   @media (max-width: 768px) {
-    nav { padding: 1.2rem 1.5rem; }
-    .nav-links { display: none; }
+    nav { padding: 1rem 1.5rem; }
+    .nav-logo { position: relative; z-index: 120; }
+    .nav-toggle { display: block; }
+    .nav-links {
+      position: fixed;
+      inset: 0;
+      background: rgba(245, 240, 232, 0.98);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      z-index: 110;
+    }
+    nav.menu-open .nav-links { opacity: 1; pointer-events: auto; }
+    .nav-links a {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      text-transform: none;
+      letter-spacing: 0.06em;
+      font-size: 1.8rem;
+      color: var(--bark);
+    }
+
     .hero { padding: 6.5rem 1.5rem 4rem; gap: 2rem; }
     .hero-collage { height: 340px; }
+    .hero-meta { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+    .hero-meta-divider { display: none; }
+    .hero-cta { display: flex; flex-direction: column; gap: 0.8rem; }
+    .btn-primary, .btn-outline { display: block; text-align: center; margin-left: 0; }
+
     section { padding: 5rem 1.5rem; }
+    .verse { padding: 4rem 1.5rem; }
     .about-visual { height: 340px; }
+    .about-quote-card { width: 64%; padding: 1.6rem 1.2rem; }
+    .about-quote-card p { font-size: 1.15rem; }
     .schedule-item { grid-template-columns: 1fr; gap: 0.5rem; }
     .schedule-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
-    .btn-outline { margin-left: 0; margin-top: 0.8rem; }
+
+    .ticket-card { padding: 2.4rem 1.4rem; }
+    .buyer-field { font-size: 1rem; }
+
     footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+
+  @media (max-width: 420px) {
+    .hero-title { font-size: 3.6rem; }
+    .hero-collage { height: 300px; }
   }
 </style>
 </head>
@@ -598,6 +660,10 @@
     <li><a href="#schedule">Schedule</a></li>
     <li><a href="#tickets">Tickets</a></li>
   </ul>
+  <button id="nav-toggle" class="nav-toggle" aria-label="Menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -819,6 +885,18 @@
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const navToggle = document.getElementById('nav-toggle');
+  navToggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('menu-open');
+    navToggle.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.nav-links a').forEach((link) => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('menu-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
   });
 
   const observer = new IntersectionObserver((entries) => {
