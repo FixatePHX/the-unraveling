@@ -104,7 +104,6 @@ async function appendToSheet(reg) {
 
   const token = await getGoogleAccessToken();
   const values = [[
-    new Date().toISOString(),
     reg.name,
     reg.email,
     reg.paymentId,
@@ -114,6 +113,7 @@ async function appendToSheet(reg) {
     reg.emergencyPhone || '',
     reg.heardAbout || '',
     (reg.workshops || []).join(', '),
+    new Date().toISOString(),
   ]];
 
   const response = await fetch(
