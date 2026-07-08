@@ -1,6 +1,6 @@
 const { createSign } = require('crypto');
 
-const NOTIFY_TO = process.env.REGISTRATION_NOTIFY_EMAIL || 'admin@fixatephx.com';
+const NOTIFY_TO = process.env.REGISTRATION_NOTIFY_EMAIL || 'women@fixatephx.com';
 const NOTIFY_FROM = process.env.RESEND_FROM || 'The Unraveling <admin@fixatephx.com>';
 
 function escapeHtml(s) {
