@@ -54,11 +54,14 @@ module.exports = async function handler(req, res) {
     const payment = response.payment;
 
     let emailSent = false;
+    let emailStatus = 'skipped: RESEND_API_KEY not set';
     try {
       const emailResult = await sendConfirmationEmail(name, email);
       emailSent = !emailResult.skipped;
+      if (emailSent) emailStatus = 'sent';
     } catch (emailError) {
       console.error('Confirmation email failed:', emailError.message);
+      emailStatus = `failed: ${String(emailError.message).slice(0, 200)}`;
     }
 
     res.status(200).json({
@@ -66,6 +69,7 @@ module.exports = async function handler(req, res) {
       paymentId: payment && payment.id,
       status: payment && payment.status,
       emailSent,
+      emailStatus,
     });
   } catch (error) {
     const message =
