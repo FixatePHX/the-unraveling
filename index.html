@@ -534,6 +534,41 @@
   .buyer-field::placeholder { color: var(--stone); opacity: 0.8; }
   .buyer-field:focus { outline: none; border-color: var(--sage); }
 
+  select.buyer-field { color: var(--charcoal); }
+  select.buyer-field:invalid, select.buyer-field option[value=""] { color: var(--stone); }
+
+  .form-section-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--sage-dark);
+    text-align: left;
+    margin: 1.4rem 0 0.7rem;
+  }
+
+  .workshop-list {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 0.6rem;
+  }
+  .workshop-list li { padding: 0.28rem 0; }
+  .workshop-list label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.82rem;
+    color: var(--earth);
+    cursor: pointer;
+    line-height: 1.5;
+  }
+  .workshop-list input[type="checkbox"] {
+    margin-top: 0.2rem;
+    accent-color: var(--sage-dark);
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+  }
+
   .wallet-buttons { margin-bottom: 0.4rem; }
   #apple-pay-button {
     display: none;
@@ -916,6 +951,30 @@
       <form id="payment-form">
         <input type="text" id="buyer-name" class="buyer-field" placeholder="Full name" autocomplete="name" required>
         <input type="email" id="buyer-email" class="buyer-field" placeholder="Email address" autocomplete="email" required>
+        <input type="text" id="dietary" class="buyer-field" placeholder="Dietary restrictions or allergies (optional)">
+
+        <p class="form-section-label">Emergency contact</p>
+        <input type="text" id="emergency-name" class="buyer-field" placeholder="Contact name" required>
+        <input type="tel" id="emergency-phone" class="buyer-field" placeholder="Contact phone" autocomplete="off" required>
+
+        <p class="form-section-label">A few more things</p>
+        <select id="heard-about" class="buyer-field">
+          <option value="" selected>How did you hear about us? (optional)</option>
+          <option>Instagram</option>
+          <option>A friend or family member</option>
+          <option>Fixate Church</option>
+          <option>Other</option>
+        </select>
+
+        <p class="form-section-label">Breakout sessions that interest you</p>
+        <ul class="workshop-list">
+          <li><label><input type="checkbox" name="workshop" value="Healing &amp; Motherhood">Healing &amp; Motherhood</label></li>
+          <li><label><input type="checkbox" name="workshop" value="Calling, Purpose &amp; Creativity">Calling, Purpose &amp; Creativity</label></li>
+          <li><label><input type="checkbox" name="workshop" value="Who Are the Father, Son &amp; Holy Spirit?">Who Are the Father, Son &amp; Holy Spirit?</label></li>
+          <li><label><input type="checkbox" name="workshop" value="Ministry in the Workplace">Ministry in the Workplace</label></li>
+        </ul>
+
+        <p class="form-section-label">Payment</p>
         <div class="wallet-buttons">
           <div id="apple-pay-button" role="button" aria-label="Pay with Apple Pay"></div>
           <div id="google-pay-button"></div>
@@ -1026,14 +1085,28 @@
         setStatus('Please enter your name and email so we can send your confirmation.', 'error');
         return null;
       }
-      return { buyerName, buyerEmail };
+      const emergencyName = document.getElementById('emergency-name').value.trim();
+      const emergencyPhone = document.getElementById('emergency-phone').value.trim();
+      if (!emergencyName || !emergencyPhone) {
+        setStatus('Please add an emergency contact name and phone number.', 'error');
+        return null;
+      }
+      return {
+        buyerName,
+        buyerEmail,
+        emergencyName,
+        emergencyPhone,
+        dietary: document.getElementById('dietary').value.trim(),
+        heardAbout: document.getElementById('heard-about').value,
+        workshops: Array.from(document.querySelectorAll('input[name="workshop"]:checked')).map((cb) => cb.value),
+      };
     }
 
     async function submitPayment(token, buyer) {
       const response = await fetch('/api/process-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sourceId: token, buyerName: buyer.buyerName, buyerEmail: buyer.buyerEmail }),
+        body: JSON.stringify(Object.assign({ sourceId: token }, buyer)),
       });
       const result = await response.json();
       if (response.ok && result.success) {
