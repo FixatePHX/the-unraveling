@@ -1,5 +1,6 @@
 const { SquareClient, SquareEnvironment } = require('square');
 const { randomUUID } = require('crypto');
+const { sendConfirmationEmail } = require('./confirmation-email');
 
 const client = new SquareClient({
   token: process.env.SQUARE_ACCESS_TOKEN,
@@ -52,10 +53,19 @@ module.exports = async function handler(req, res) {
 
     const payment = response.payment;
 
+    let emailSent = false;
+    try {
+      const emailResult = await sendConfirmationEmail(name, email);
+      emailSent = !emailResult.skipped;
+    } catch (emailError) {
+      console.error('Confirmation email failed:', emailError.message);
+    }
+
     res.status(200).json({
       success: true,
       paymentId: payment && payment.id,
       status: payment && payment.status,
+      emailSent,
     });
   } catch (error) {
     const message =
