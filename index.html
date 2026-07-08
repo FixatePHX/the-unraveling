@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Unraveling — Women's Conference 2027</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400&display=swap" rel="stylesheet">
@@ -61,6 +62,14 @@
     color: var(--bark);
     text-decoration: none;
     font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-mark {
+    height: 34px;
+    width: auto;
+    mix-blend-mode: multiply;
   }
   .nav-links {
     display: flex;
@@ -149,15 +158,18 @@
 
   .hero-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(4rem, 8.5vw, 7.5rem);
+    font-size: clamp(2.6rem, 4.5vw, 3.8rem);
     font-weight: 300;
-    line-height: 0.95;
+    line-height: 1;
     color: var(--bark);
-    letter-spacing: -0.01em;
+    letter-spacing: 0.04em;
   }
-  .hero-title em {
-    font-style: italic;
-    font-weight: 400;
+  .hero-script {
+    display: block;
+    width: min(540px, 94%);
+    height: auto;
+    margin-top: 0.5rem;
+    mix-blend-mode: multiply;
   }
 
   .hero-tagline {
@@ -646,7 +658,7 @@
   }
 
   @media (max-width: 420px) {
-    .hero-title { font-size: 3.6rem; }
+    .hero-title { font-size: 2.3rem; }
     .hero-collage { height: 300px; }
   }
 </style>
@@ -654,7 +666,7 @@
 <body>
 
 <nav id="nav">
-  <a href="#" class="nav-logo">The Unraveling</a>
+  <a href="#" class="nav-logo"><img src="images/monogram.png" alt="" class="nav-mark">The Unraveling</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#schedule">Schedule</a></li>
@@ -670,7 +682,7 @@
 <section class="hero" id="home">
   <div>
     <p class="hero-eyebrow">Fixate Church · Downtown Phoenix · February 2027</p>
-    <h1 class="hero-title">The<br><em>Unraveling</em></h1>
+    <h1 class="hero-title">The<img src="images/script.png" alt="Unraveling" class="hero-script"></h1>
     <p class="hero-tagline">the undoing of what has become tangled</p>
     <div class="hero-meta">
       <span class="hero-meta-item">February 2027</span>
@@ -725,6 +737,7 @@
 
 <!-- VERSE -->
 <section class="verse">
+  <img src="images/monogram.png" alt="Fixate Women" style="display:block;height:96px;width:auto;margin:0 auto 1rem;mix-blend-mode:multiply;">
   <svg class="sprig-divider centered" width="120" height="26" viewBox="0 0 120 26" aria-hidden="true" style="display:block;">
     <g style="fill:none;stroke:#8A9B7F;stroke-width:1.1;stroke-linecap:round;">
       <path d="M6 14 C40 10 80 18 114 13"/>
