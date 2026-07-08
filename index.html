@@ -534,6 +534,43 @@
   .buyer-field::placeholder { color: var(--stone); opacity: 0.8; }
   .buyer-field:focus { outline: none; border-color: var(--sage); }
 
+  .wallet-buttons { margin-bottom: 0.4rem; }
+  #apple-pay-button {
+    display: none;
+    width: 100%;
+    height: 48px;
+    margin-bottom: 0.8rem;
+    cursor: pointer;
+  }
+  @supports (-webkit-appearance: -apple-pay-button) {
+    #apple-pay-button.ready {
+      display: block;
+      -webkit-appearance: -apple-pay-button;
+      -apple-pay-button-type: plain;
+      -apple-pay-button-style: black;
+    }
+  }
+  #google-pay-button { display: none; margin-bottom: 0.8rem; }
+  #google-pay-button.ready { display: block; }
+
+  .pay-divider {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    margin: 0.4rem 0 1rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+  .pay-divider.ready { display: flex; }
+  .pay-divider::before, .pay-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(200,184,154,0.5);
+  }
+
   #card-container { margin-bottom: 1.2rem; }
 
   .ticket-cta {
@@ -879,6 +916,11 @@
       <form id="payment-form">
         <input type="text" id="buyer-name" class="buyer-field" placeholder="Full name" autocomplete="name" required>
         <input type="email" id="buyer-email" class="buyer-field" placeholder="Email address" autocomplete="email" required>
+        <div class="wallet-buttons">
+          <div id="apple-pay-button" role="button" aria-label="Pay with Apple Pay"></div>
+          <div id="google-pay-button"></div>
+        </div>
+        <div class="pay-divider" id="pay-divider">or pay by card</div>
         <div id="card-container"></div>
         <button id="card-button" type="submit" class="ticket-cta">Reserve Your Place — $100</button>
         <div id="payment-status" class="payment-status"></div>
@@ -977,38 +1019,94 @@
     const form = document.getElementById('payment-form');
     const cardButton = document.getElementById('card-button');
 
-    form.addEventListener('submit', async function (event) {
-      event.preventDefault();
-
+    function getBuyerInfo() {
       const buyerName = document.getElementById('buyer-name').value.trim();
       const buyerEmail = document.getElementById('buyer-email').value.trim();
       if (!buyerName || !buyerEmail) {
         setStatus('Please enter your name and email so we can send your confirmation.', 'error');
-        return;
+        return null;
       }
+      return { buyerName, buyerEmail };
+    }
+
+    async function submitPayment(token, buyer) {
+      const response = await fetch('/api/process-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sourceId: token, buyerName: buyer.buyerName, buyerEmail: buyer.buyerEmail }),
+      });
+      const result = await response.json();
+      if (response.ok && result.success) {
+        setStatus('You have a place at the table. A confirmation email is on its way.', 'success');
+        form.reset();
+        cardButton.textContent = 'Reserved';
+        cardButton.disabled = true;
+        return true;
+      }
+      setStatus(result.error || 'Payment could not be completed. Please try again.', 'error');
+      return false;
+    }
+
+    async function payWithWallet(method) {
+      const buyer = getBuyerInfo();
+      if (!buyer) return;
+      setStatus('Processing your reservation...', 'pending');
+      try {
+        const token = await tokenize(method);
+        await submitPayment(token, buyer);
+      } catch (e) {
+        if (e.message && /cancel/i.test(e.message)) {
+          setStatus('', '');
+          return;
+        }
+        setStatus(e.message || 'Something went wrong. Please try again.', 'error');
+      }
+    }
+
+    try {
+      const paymentRequest = payments.paymentRequest({
+        countryCode: 'US',
+        currencyCode: 'USD',
+        total: { amount: '100.00', label: 'The Unraveling — General Admission' },
+      });
+
+      let walletAvailable = false;
+
+      try {
+        const applePay = await payments.applePay(paymentRequest);
+        const applePayButton = document.getElementById('apple-pay-button');
+        applePayButton.classList.add('ready');
+        applePayButton.addEventListener('click', () => payWithWallet(applePay));
+        walletAvailable = true;
+      } catch (e) {}
+
+      try {
+        const googlePay = await payments.googlePay(paymentRequest);
+        await googlePay.attach('#google-pay-button', { buttonColor: 'default', buttonSizeMode: 'fill', buttonType: 'long' });
+        const googlePayButton = document.getElementById('google-pay-button');
+        googlePayButton.classList.add('ready');
+        googlePayButton.addEventListener('click', () => payWithWallet(googlePay));
+        walletAvailable = true;
+      } catch (e) {}
+
+      if (walletAvailable) {
+        document.getElementById('pay-divider').classList.add('ready');
+      }
+    } catch (e) {}
+
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      const buyer = getBuyerInfo();
+      if (!buyer) return;
 
       cardButton.disabled = true;
       setStatus('Processing your reservation...', 'pending');
 
       try {
         const token = await tokenize(card);
-
-        const response = await fetch('/api/process-payment', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sourceId: token, buyerName, buyerEmail }),
-        });
-
-        const result = await response.json();
-
-        if (response.ok && result.success) {
-          setStatus('You have a place at the table. A confirmation email is on its way.', 'success');
-          form.reset();
-          cardButton.textContent = 'Reserved';
-        } else {
-          setStatus(result.error || 'Payment could not be completed. Please try again.', 'error');
-          cardButton.disabled = false;
-        }
+        const ok = await submitPayment(token, buyer);
+        if (!ok) cardButton.disabled = false;
       } catch (e) {
         setStatus(e.message || 'Something went wrong. Please try again.', 'error');
         cardButton.disabled = false;
